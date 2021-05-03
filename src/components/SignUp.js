@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { signInWithGoogle, auth } from "../firebase";
-import userActions from "../redux/actions/userActions";
+import { useBackground } from "../hooks/useBackground";
+import { validateSignUp } from "../utils/utils";
+import useSetUser from "../hooks/useSetUser";
 
 function SignUp() {
   const [emailError, setEmailError] = useState(undefined);
@@ -11,42 +12,23 @@ function SignUp() {
   const passwordRef = useRef();
   const confirmPasswordRef = useRef();
 
-  const dispatch = useDispatch();
-  const history = useHistory();
-
   const handleSignUp = async (e) => {
-    const emailValue = emailRef.current.value;
-    const passValue = passwordRef.current.value;
-
-    let emailNotError = false;
-    let passNotError = false;
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
 
     e.preventDefault();
 
-    if (emailValue === "") {
-      setEmailError("Email field can't be empty");
-    } else {
-      setEmailError(undefined);
-      emailNotError = true;
-    }
-
-    if (passValue === "") {
-      setPasswordError("Password field can't be empty");
-    } else if (
-      passwordError &&
-      passValue !== confirmPasswordRef.current.value
-    ) {
-      setPasswordError("The password doesn't match");
-    } else if (passwordError && passValue < 6) {
-      setPasswordError("The password is too short");
-    } else {
-      setPasswordError(undefined);
-      passNotError = true;
-    }
+    const [emailNotError, passNotError] = validateSignUp(
+      email,
+      password,
+      setEmailError,
+      setPasswordError,
+      confirmPasswordRef.current.value
+    );
 
     if (emailNotError && passNotError) {
       try {
-        await auth.createUserWithEmailAndPassword(emailValue, passValue);
+        await auth.createUserWithEmailAndPassword(email, password);
       } catch (error) {
         setEmailError(error.message);
       }
@@ -57,29 +39,17 @@ function SignUp() {
     signInWithGoogle();
   };
 
-  useEffect(() => {
-    const unsuscribe = auth.onAuthStateChanged((userAuth) => {
-      if (userAuth === null) return null;
-      dispatch(
-        userActions.setUser({
-          name: userAuth.displayName,
-          email: userAuth.email,
-          photoURL: userAuth.photoURL,
-          id: userAuth.uid,
-        })
-      );
-      history.push("/profile");
-    });
-    return unsuscribe;
-  }, [dispatch, history]);
+  useSetUser();
+
+  useBackground(true);
 
   return (
     <div className="container d-flex align-items-center justify-content-center vh100">
-      <div className="card p-5">
+      <div className="card p-4">
         <div className="card-title">
-          <h1 className="display-4 text-center">Sign Up</h1>
+          <h1 className="display-4 text-center m-0">Sign Up</h1>
         </div>
-        <div className="card-body p-1">
+        <div className="card-body px-4 m-0 py-0">
           <form onSubmit={handleSignUp}>
             <div className="form-group row">
               <label htmlFor="email">Email</label>

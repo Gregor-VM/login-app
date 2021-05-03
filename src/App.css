@@ -7,13 +7,13 @@
 }
 
 body {
-  background-image: url("https://images.pexels.com/photos/2112032/pexels-photo-2112032.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   background-repeat: no-repeat;
   background-size: cover;
   background-position-y: 0px;
 }
 
 .body_animation {
+  background-image: url("https://images.pexels.com/photos/2112032/pexels-photo-2112032.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   transition: all 300s linear;
   background-position-y: 100%;
 }

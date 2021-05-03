@@ -1,9 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { signInWithGoogle, auth } from "../firebase";
-import { useDispatch } from "react-redux";
-import userActions from "../redux/actions/userActions";
-import { useHistory } from "react-router-dom";
+import { useBackground } from "../hooks/useBackground";
+import { validateSignIn } from "../utils/utils";
+import useSetUser from "../hooks/useSetUser";
 
 function SignIn() {
   const [emailError, setEmailError] = useState(undefined);
@@ -11,64 +11,35 @@ function SignIn() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const history = useHistory();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    const unsuscribe = auth.onAuthStateChanged((userAuth) => {
-      if (userAuth === null) return null;
-      dispatch(
-        userActions.setUser({
-          name: userAuth.displayName,
-          email: userAuth.email,
-          photoURL: userAuth.photoURL,
-          id: userAuth.uid,
-        })
-      );
-      history.push("/profile");
-    });
-    return unsuscribe;
-  }, [dispatch, history]);
-
   const googleLogin = () => {
     signInWithGoogle();
   };
 
-  const quitError = (setError) => {
-    setError(undefined);
-    return true;
-  };
-
   const handleSignIn = async (e) => {
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
+
     e.preventDefault();
 
-    const emailNotError =
-      emailRef.current.value === ""
-        ? setEmailError("Email field can't be empty")
-        : quitError(setEmailError);
-
-    let passNotError = false;
-
-    if (passwordRef.current.value === "") {
-      setPasswordError("Password field can't be empty");
-    } else if (passwordRef.current.value.length < 6) {
-      setPasswordError("The password is too short");
-    } else {
-      passNotError = quitError(setPasswordError);
-    }
+    const [emailNotError, passNotError] = validateSignIn(
+      email,
+      password,
+      setEmailError,
+      setPasswordError
+    );
 
     if (emailNotError && passNotError) {
-      console.log(passwordError, emailError);
       try {
-        await auth.signInWithEmailAndPassword(
-          emailRef.current.value,
-          passwordRef.current.value
-        );
+        await auth.signInWithEmailAndPassword(email, password);
       } catch (error) {
         setEmailError(error.message);
       }
     }
   };
+
+  useSetUser();
+
+  useBackground(true);
 
   return (
     <div className="container d-flex align-items-center justify-content-center vh100">

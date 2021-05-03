@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
+import { useBackground } from "../hooks/useBackground";
 
 function ForgotPassword() {
   const [msg, setMsg] = useState("");
@@ -13,6 +14,9 @@ function ForgotPassword() {
       setMsg(error.message);
     }
   };
+
+  useBackground(true);
+
   return (
     <div className="container vh100 d-flex align-items-center justify-content-center">
       <div className="card p-4">

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Profile from "./Profile";
@@ -7,9 +7,6 @@ import { useSelector } from "react-redux";
 import ForgotPassword from "./ForgotPassword";
 
 function Layout() {
-  useEffect(() => {
-    document.body.className += " body_animation";
-  }, []);
   const user = useSelector((state) => state.user.user);
   return (
     <Router>

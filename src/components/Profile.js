@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { auth } from "../firebase";
 import { useHistory } from "react-router-dom";
 import userActions from "../redux/actions/userActions";
+import { useBackground } from "../hooks/useBackground";
 
 function Profile() {
   const user = useSelector((state) => state.user.user);
@@ -15,7 +16,7 @@ function Profile() {
     dispacth(userActions.setUser({}));
   };
 
-  console.log(user);
+  useBackground(false);
 
   return (
     <div className="container vh100 d-flex align-items-center justify-content-center">
