@@ -1,6 +1,6 @@
 import firebase from "firebase/app";
 import "firebase/auth";
-import "firebase/database";
+import "firebase/firestore";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -20,4 +20,4 @@ export const signInWithGoogle = () => {
 };
 
 export const auth = firebase.auth();
-export const firestore = firebase.storage;
+export const db = firebase.firestore();

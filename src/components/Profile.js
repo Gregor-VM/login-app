@@ -1,26 +1,18 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { auth } from "../firebase";
-import { useHistory } from "react-router-dom";
-import userActions from "../redux/actions/userActions";
+import { useSelector } from "react-redux";
 import { useBackground } from "../hooks/useBackground";
+import WriteArticle from "./WriteArticle";
+import NavBar from "./NavBar";
+import Articles from "./Articles";
 
 function Profile() {
   const user = useSelector((state) => state.user.user);
-  const history = useHistory();
-  const dispacth = useDispatch();
-
-  const handleLogOut = () => {
-    auth.signOut();
-    history.push("/signin");
-    dispacth(userActions.setUser({}));
-  };
 
   useBackground(false);
-
+  /*
   return (
-    <div className="container vh100 d-flex align-items-center justify-content-center">
-      <div className="card p-4">
+    <div className="container row mx-auto vh100">
+      <div className="card p-4 col-md-3 m-2">
         {user.photoURL !== null ? (
           <img className="card-img-top" alt="profile" src={user.photoURL}></img>
         ) : null}
@@ -39,7 +31,22 @@ function Profile() {
           Log out
         </button>
       </div>
+
+      <div className="card col-md-8 m-2">
+        <div className="card-body">
+          <p>Your email is: {user.email}</p>
+        </div>
+      </div>
     </div>
+  );*/
+  return (
+    <>
+      <NavBar user={user} />
+      <div className="container">
+        <WriteArticle />
+        <Articles />
+      </div>
+    </>
   );
 }
 
