@@ -17,3 +17,12 @@ body {
   transition: all 300s linear;
   background-position-y: 100%;
 }
+
+.hover {
+  cursor: pointer;
+}
+
+.hover_red:hover {
+  cursor: pointer;
+  color: red;
+}

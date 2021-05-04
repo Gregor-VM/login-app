@@ -18,14 +18,15 @@ function WriteArticle() {
     const dt = new Date();
     const article = {
       name: user.name,
+      user_id: user.id,
       photoURL: user?.photoURL || null,
       text: textValue,
       date: `${dt.getUTCDay()}/${dt.getUTCMonth()}/${dt.getUTCFullYear()} at ${dt.getUTCHours()}:${dt.getUTCMinutes()}:${dt.getUTCSeconds()}`,
     };
     try {
-      db.collection("articles").add(article);
+      const res = await db.collection("articles").add(article);
       setMsg({ msg: "Articulo enviado!", error: false });
-      dispatch(articleActions.addArticle(article));
+      dispatch(articleActions.addArticle({ ...article, itemId: res.id }));
       setTextValue("");
     } catch (error) {
       setMsg({ msg: error.message, error: true });
@@ -33,7 +34,7 @@ function WriteArticle() {
   };
 
   return (
-    <div className="card mt-3 row mx-1">
+    <div className="card mt-3 row mx-1 shadow-sm">
       <div className="card-body col-12">
         <div className="form-group">
           <textarea

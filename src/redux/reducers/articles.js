@@ -10,7 +10,7 @@ function userReducer(state = initialState, { type, payload }) {
         return { ...state, articles: [...state.articles, ...payload] };
       } else {
         if (payload?.name) {
-          return { ...state, articles: [...state.articles, payload] };
+          return { ...state, articles: [payload, ...state.articles] };
         } else {
           return state;
         }
