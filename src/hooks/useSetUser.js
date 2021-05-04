@@ -30,7 +30,7 @@ const useSetUser = () => {
       }
       console.log(userInfo);
       dispatch(userActions.setUser(userInfo));
-      history.push("/profile");
+      history.push("/home");
     });
     return unsuscribe;
   }, [dispatch, history]);

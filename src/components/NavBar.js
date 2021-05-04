@@ -1,12 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { auth } from "../firebase";
 import userActions from "../redux/actions/userActions";
 
 function NavBar({ user }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const currentLocation = history.location.pathname;
 
   const handleLogOut = (e) => {
     e.preventDefault();
@@ -32,15 +33,23 @@ function NavBar({ user }) {
         {user.name === null ? "Anónimo" : user.name}
       </a>
       <ul className="navbar-nav d-flex flex-row">
-        <li className="nav-item active mx-2">
-          <a className="nav-link" href="/#">
+        <li
+          className={
+            (currentLocation === "/home" ? "active" : "") + " nav-item mx-2"
+          }
+        >
+          <Link className="nav-link" to="/home">
             Home<span className="sr-only">(current)</span>
-          </a>
+          </Link>
         </li>
-        <li className="nav-item mx-2">
-          <a className="nav-link" href="/#">
+        <li
+          className={
+            (currentLocation === "/settings" ? "active" : "") + " nav-item mx-2"
+          }
+        >
+          <Link className="nav-link" to="/settings">
             Settings<span className="sr-only">(current)</span>
-          </a>
+          </Link>
         </li>
         <li className="nav-item mx-2">
           <a className="nav-link" href="/#" onClick={handleLogOut}>

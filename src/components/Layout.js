@@ -1,10 +1,11 @@
 import React from "react";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import Profile from "./Profile";
+import Home from "./Home";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ForgotPassword from "./ForgotPassword";
+import Settings from "./Settings";
 
 function Layout() {
   const user = useSelector((state) => state.user.user);
@@ -14,15 +15,16 @@ function Layout() {
         <Route
           exact
           path="/"
-          component={user.id === undefined ? SignIn : Profile}
+          component={user.id === undefined ? SignIn : Home}
         />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
-        <Route
-          path="/profile"
-          component={user.id === undefined ? SignIn : Profile}
-        />
+        <Route path="/home" component={user.id === undefined ? SignIn : Home} />
         <Route path="/recover" component={ForgotPassword} />
+        <Route
+          path="/settings"
+          component={user.id === undefined ? SignIn : Settings}
+        />
       </Switch>
     </Router>
   );
