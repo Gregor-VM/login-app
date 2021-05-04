@@ -1,36 +1,87 @@
-import React, { useState } from "react";
-import { db } from "../firebase";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import articleActions from "../redux/actions/articleActions";
 import { useDispatch } from "react-redux";
+import firebaseUtils from "../utils/firebase_utils";
+import editingActions from "../redux/actions/editingActions";
 
 function WriteArticle() {
   const [textValue, setTextValue] = useState("");
   const [msg, setMsg] = useState({ msg: "", error: false });
+  const [sending, setSending] = useState(false);
   const user = useSelector((state) => state.user.user);
+  const editing = useSelector((state) => state.editing);
+  const articlesOfRedux = useSelector((state) => state.articles.articles);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (editing.editing) {
+      setTextValue(editing.editingDoc.text);
+    }
+  }, [editing]);
 
   const handleShare = async (e) => {
     e.preventDefault();
+    setSending(true);
+
     if (textValue === "") {
       return setMsg({ msg: "Tu mensaje está vacio!", error: true });
     }
-    const dt = new Date();
-    const article = {
-      name: user.name,
-      user_id: user.id,
-      photoURL: user?.photoURL || null,
-      text: textValue,
-      date: `${dt.getUTCDay()}/${dt.getUTCMonth()}/${dt.getUTCFullYear()} at ${dt.getUTCHours()}:${dt.getUTCMinutes()}:${dt.getUTCSeconds()}`,
-    };
-    try {
-      const res = await db.collection("articles").add(article);
-      setMsg({ msg: "Articulo enviado!", error: false });
-      dispatch(articleActions.addArticle({ ...article, itemId: res.id }));
-      setTextValue("");
-    } catch (error) {
-      setMsg({ msg: error.message, error: true });
+
+    if (editing.editing) {
+      try {
+        const { msg, finalArticle } = await firebaseUtils.updateArticle(
+          editing.editingDoc,
+          textValue
+        );
+
+        setMsg(msg);
+        dispatch(
+          articleActions.setArticles(
+            articlesOfRedux.map((item) => {
+              if (item.itemId === finalArticle.itemId) {
+                return {
+                  ...item,
+                  text: finalArticle.text,
+                  date: finalArticle.date,
+                };
+              } else {
+                return item;
+              }
+            })
+          )
+        );
+        dispatch(editingActions.setEditing(false));
+        dispatch(editingActions.setEditingDoc({}));
+
+        setTextValue("");
+        setSending(false);
+        return null;
+      } catch (error) {
+        setMsg(msg);
+        setSending(false);
+      }
     }
+
+    try {
+      const { msg, finalArticle } = await firebaseUtils.addArticle(
+        user,
+        textValue
+      );
+      setMsg(msg);
+      if (finalArticle) dispatch(articleActions.addArticle(finalArticle));
+      setTextValue("");
+      setSending(false);
+    } catch ({ msg }) {
+      setMsg(msg);
+      setSending(false);
+    }
+  };
+
+  const handleCancelUpdate = () => {
+    dispatch(editingActions.setEditingDoc({}));
+    dispatch(editingActions.setEditing(false));
+    setTextValue("");
   };
 
   return (
@@ -51,9 +102,21 @@ function WriteArticle() {
         {!msg.error && msg.msg !== "" ? (
           <div className="alert alert-success">{msg.msg}</div>
         ) : null}
-        <button type="submit" className="btn btn-success" onClick={handleShare}>
-          Share
+        <button
+          type="submit"
+          className="btn btn-success"
+          onClick={handleShare}
+          disabled={sending}
+        >
+          {editing.editing ? "Update" : "Share"}
         </button>
+
+        {editing.editing && (
+          <button className="btn btn-danger ml-2" onClick={handleCancelUpdate}>
+            Cancel
+          </button>
+        )}
+
         <button className="btn btn-outline-secondary ml-2">Save</button>
       </div>
     </div>

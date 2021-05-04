@@ -26,3 +26,8 @@ body {
   cursor: pointer;
   color: red;
 }
+
+.hover_blue:hover {
+  cursor: pointer;
+  color: rgb(0, 110, 255);
+}
