@@ -18,14 +18,18 @@ function NavBar({ user }) {
   return (
     <nav className="navbar navbar-light bg-light">
       <a className="navbar-brand" href="/#" onClick={(e) => e.preventDefault()}>
-        <img
-          src={user.photoURL}
-          width="30"
-          height="30"
-          className="d-inline-block align-top rounded-circle mr-2"
-          alt="avatar"
-        ></img>
-        {user.name}
+        {user.photoURL !== null ? (
+          <img
+            src={user.photoURL}
+            width="30"
+            height="30"
+            className="d-inline-block align-top rounded-circle mr-2"
+            alt="avatar"
+          ></img>
+        ) : (
+          <i className="fas fa-user-alt mr-2"></i>
+        )}
+        {user.name === null ? "Anónimo" : user.name}
       </a>
       <ul className="navbar-nav d-flex flex-row">
         <li className="nav-item active mx-2">

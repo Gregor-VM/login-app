@@ -14,7 +14,7 @@ function ArticleItem({ name, photoURL, text, date }) {
         ) : (
           <i className="fas fa-user-alt mr-2"></i>
         )}
-        <span className="lead">{name}</span>
+        <span className="lead">{name === null ? "Anónimo" : name}</span>
       </div>
       <div className="card-body col-12 p-2">
         <p>{text}</p>

@@ -20,7 +20,7 @@ function WriteArticle() {
       name: user.name,
       photoURL: user?.photoURL || null,
       text: textValue,
-      date: `${dt.getDay()}/${dt.getMonth()}/${dt.getFullYear()}`,
+      date: `${dt.getUTCDay()}/${dt.getUTCMonth()}/${dt.getUTCFullYear()} at ${dt.getUTCHours()}:${dt.getUTCMinutes()}:${dt.getUTCSeconds()}`,
     };
     try {
       db.collection("articles").add(article);
