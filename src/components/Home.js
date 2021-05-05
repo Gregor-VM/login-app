@@ -5,7 +5,7 @@ import WriteArticle from "./WriteArticle";
 import NavBar from "./NavBar";
 import Articles from "./Articles";
 
-function Profile() {
+function Home() {
   const user = useSelector((state) => state.user.user);
 
   useBackground(false);
@@ -20,4 +20,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default Home;

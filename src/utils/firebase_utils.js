@@ -2,18 +2,29 @@ import { db } from "../firebase";
 
 const pageSize = 10;
 
+async function getUserNameAndPhotoById(id) {
+  const res = await db.collection("users").doc(id).get();
+  const user = res.data();
+  return { name: user.name, photoURL: user.photoURL };
+}
+
 const firebaseUtils = {
   firstArticles: async function () {
     const ref = db.collection("articles").orderBy("date", "desc");
     const data = await ref.limit(pageSize).get();
     let articles = [];
     let lastKey = "";
-    data.docs.forEach((item) => {
+
+    for (const item of data.docs) {
       const itemData = item.data();
       const itemId = item.id;
-      articles.push({ ...itemData, itemId });
+      const { name, photoURL } = await getUserNameAndPhotoById(
+        itemData.user_id
+      );
+      articles.push({ ...itemData, itemId, name, photoURL });
       lastKey = item;
-    });
+    }
+
     return { articles, lastKey };
   },
   nextArticles: async function (key) {
@@ -21,20 +32,21 @@ const firebaseUtils = {
     const data = await ref.startAfter(key).limit(pageSize).get();
     let articles = [];
     let lastKey = "";
-    data.docs.forEach((item) => {
+    for (const item of data.docs) {
       const itemData = item.data();
       const itemId = item.id;
-      articles.push({ ...itemData, itemId });
+      const { name, photoURL } = await getUserNameAndPhotoById(
+        itemData.user_id
+      );
+      articles.push({ ...itemData, itemId, name, photoURL });
       lastKey = item;
-    });
+    }
     return { articles, lastKey };
   },
   addArticle: async function (user, textValue) {
     const dt = new Date();
     const article = {
-      name: user.name,
       user_id: user.id,
-      photoURL: user?.photoURL || null,
       text: textValue,
       date: `${dt.getUTCDay()}/${dt.getUTCMonth()}/${dt.getUTCFullYear()} at ${dt.getUTCHours()}:${dt.getUTCMinutes()}:${dt.getUTCSeconds()}`,
     };

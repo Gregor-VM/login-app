@@ -7,6 +7,7 @@ import editingActions from "../redux/actions/editingActions";
 
 function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const [loading, setLoading] = useState(false);
+
   const userId = useSelector((state) => state.user.user.id);
   const articles = useSelector((state) => state.articles.articles);
   const admin = userId === user_id;
@@ -58,7 +59,7 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
                 <Loading sm={true} />
               ) : (
                 <i
-                  class="fas fa-trash hover_red p-2"
+                  className="fas fa-trash hover_red p-2"
                   onClick={handleDelete}
                 ></i>
               ))}

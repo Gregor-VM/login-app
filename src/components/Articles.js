@@ -11,10 +11,12 @@ function Articles() {
   const [loading, setLoading] = useState(true);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [noMore, setNoMore] = useState(false);
+  const [mounted, setMounted] = useState(true);
 
   const dispatch = useDispatch();
   const loadArticlesCallback = useCallback(
-    (refresh) => {
+    (refresh, init = true) => {
+      if (!init) setLoading(false);
       setRefreshLoading(refresh);
       firebaseUtils.firstArticles().then(({ articles, lastKey }) => {
         dispatch(articleActions.setArticles(articles));
@@ -27,9 +29,10 @@ function Articles() {
   );
 
   useEffect(() => {
-    loadArticlesCallback(false);
-    //return () => dispatch(articleActions.setArticles([]));
-  }, [loadArticlesCallback]);
+    const init = articlesRedux.length === 0;
+    if (mounted) loadArticlesCallback(false, init);
+    return () => setMounted(false);
+  }, [loadArticlesCallback, mounted, articlesRedux.length]);
 
   const handleLoadMore = (e) => {
     setLoading(true);
