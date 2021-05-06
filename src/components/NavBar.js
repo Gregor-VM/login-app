@@ -16,9 +16,14 @@ function NavBar({ user }) {
     dispatch(userActions.setUser({}));
   };
 
+  const handleSeeProfile = (e) => {
+    e.preventDefault();
+    history.push("/profile", user.id);
+  };
+
   return (
     <nav className="navbar navbar-light bg-light">
-      <a className="navbar-brand" href="/#" onClick={(e) => e.preventDefault()}>
+      <a className="navbar-brand" href="/#" onClick={handleSeeProfile}>
         {user.photoURL !== null ? (
           <img
             src={user.photoURL}

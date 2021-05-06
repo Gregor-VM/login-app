@@ -6,6 +6,7 @@ import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ForgotPassword from "./ForgotPassword";
 import Settings from "./Settings";
+import Profile from "./Profile";
 
 function Layout() {
   const user = useSelector((state) => state.user.user);
@@ -24,6 +25,10 @@ function Layout() {
         <Route
           path="/settings"
           component={user.id === undefined ? SignIn : Settings}
+        />
+        <Route
+          path="/profile"
+          component={user.id === undefined ? SignIn : Profile}
         />
       </Switch>
     </Router>

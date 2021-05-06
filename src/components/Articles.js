@@ -5,39 +5,44 @@ import articleActions from "../redux/actions/articleActions";
 import firebaseUtils from "../utils/firebase_utils";
 import Loading from "./Loading";
 
-function Articles() {
+function Articles({ id }) {
   const articlesRedux = useSelector((state) => state.articles.articles);
   const [last, setLast] = useState("");
   const [loading, setLoading] = useState(true);
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [noMore, setNoMore] = useState(false);
-  const [mounted, setMounted] = useState(true);
 
   const dispatch = useDispatch();
   const loadArticlesCallback = useCallback(
-    (refresh, init = true) => {
-      if (!init) setLoading(false);
+    (refresh) => {
+      dispatch(articleActions.setArticles([]));
+      setLoading(true);
+      if (id === undefined && window.location.href.includes("profile")) {
+        return null;
+      }
       setRefreshLoading(refresh);
-      firebaseUtils.firstArticles().then(({ articles, lastKey }) => {
+      const queryId = id ? id : false;
+      firebaseUtils.firstArticles(queryId).then(({ articles, lastKey }) => {
         dispatch(articleActions.setArticles(articles));
         setLast(lastKey);
         setLoading(false);
         setRefreshLoading(false);
       });
     },
-    [dispatch]
+    [dispatch, id]
   );
 
   useEffect(() => {
-    const init = articlesRedux.length === 0;
-    if (mounted) loadArticlesCallback(false, init);
-    return () => setMounted(false);
-  }, [loadArticlesCallback, mounted, articlesRedux.length]);
+    let mounted = true;
+    if (mounted) loadArticlesCallback(false);
+    return () => (mounted = false);
+  }, [loadArticlesCallback]);
 
   const handleLoadMore = (e) => {
     setLoading(true);
     e.preventDefault();
-    firebaseUtils.nextArticles(last).then(({ articles, lastKey }) => {
+    const queryId = id ? id : false;
+    firebaseUtils.nextArticles(last, queryId).then(({ articles, lastKey }) => {
       dispatch(articleActions.addArticle(articles));
       setLast(lastKey);
       if (articles.length === 0) {

@@ -9,8 +9,15 @@ async function getUserNameAndPhotoById(id) {
 }
 
 const firebaseUtils = {
-  firstArticles: async function () {
-    const ref = db.collection("articles").orderBy("date", "desc");
+  firstArticles: async function (id = false) {
+    let ref = {};
+    if (id)
+      ref = db
+        .collection("articles")
+        .where("user_id", "==", id)
+        .orderBy("date", "desc");
+    if (!id) ref = db.collection("articles").orderBy("date", "desc");
+
     const data = await ref.limit(pageSize).get();
     let articles = [];
     let lastKey = "";
@@ -27,8 +34,15 @@ const firebaseUtils = {
 
     return { articles, lastKey };
   },
-  nextArticles: async function (key) {
-    const ref = db.collection("articles").orderBy("date", "desc");
+  nextArticles: async function (key, id = false) {
+    let ref = {};
+    if (id)
+      ref = db
+        .collection("articles")
+        .where("user_id", "==", id)
+        .orderBy("date", "desc");
+    if (!id) ref = db.collection("articles").orderBy("date", "desc");
+
     const data = await ref.startAfter(key).limit(pageSize).get();
     let articles = [];
     let lastKey = "";
@@ -75,6 +89,11 @@ const firebaseUtils = {
       const msg = { msg: error.message, error: true };
       return { msg };
     }
+  },
+  getUserInfoById: async (id) => {
+    const res = await db.collection("users").doc(id).get();
+    const user = res.data();
+    return user;
   },
 };
 

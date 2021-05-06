@@ -4,6 +4,7 @@ import { db } from "../firebase";
 import articleActions from "../redux/actions/articleActions";
 import Loading from "./Loading";
 import editingActions from "../redux/actions/editingActions";
+import { useHistory } from "react-router-dom";
 
 function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const [loading, setLoading] = useState(false);
@@ -12,6 +13,7 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const articles = useSelector((state) => state.articles.articles);
   const admin = userId === user_id;
   const dispatch = useDispatch();
+  const history = useHistory();
 
   async function handleDelete() {
     if (window.confirm("Are you sure to delete this item?")) {
@@ -30,11 +32,15 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
     dispatch(editingActions.setEditingDoc({ text, date, itemId }));
   }
 
+  const handleSeeProfile = () => {
+    history.push("/profile", user_id);
+  };
+
   return (
     <div className="card shadow-sm p-4 row my-4">
       <div className="card-title">
         <div className="d-flex justify-content-between flex-md-row flex-column">
-          <div>
+          <div className="hover_blue" onClick={handleSeeProfile}>
             {photoURL !== null ? (
               <img
                 src={photoURL}
