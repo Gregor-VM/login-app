@@ -28,7 +28,6 @@ const useSetUser = () => {
           .get();
         userInfo = data.docs[0].data();
       }
-      console.log(userInfo);
       dispatch(userActions.setUser(userInfo));
       history.push("/home");
     });

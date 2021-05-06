@@ -14,7 +14,9 @@ function ProfileInfo({ user }) {
       <div className="card p-4 col-md-3 m-4 h-25">
         {user.photoURL !== null ? (
           <img
-            className="card-img-top rounded-circle"
+            className="mx-auto rounded-circle"
+            width="100"
+            height="100"
             alt="profile"
             src={user.photoURL}
           ></img>

@@ -95,6 +95,35 @@ const firebaseUtils = {
     const user = res.data();
     return user;
   },
+  deleteAccount: async (id) => {
+    try {
+      await db.collection("users").doc(id).delete();
+      const data = await db
+        .collection("articles")
+        .where("user_id", "==", id)
+        .get();
+      for (const item of data.docs) {
+        await item.ref.delete();
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
+  },
+  thisNameExists: async (name) => {
+    try {
+      const resName = await db
+        .collection("users")
+        .where("name", "==", name)
+        .get();
+      return resName;
+    } catch (error) {
+      return false;
+    }
+  },
+  updateNameAndPhoto: async (name, photoURL, id) => {
+    await db.collection("users").doc(id).update({ name, photoURL });
+  },
 };
 
 export default firebaseUtils;

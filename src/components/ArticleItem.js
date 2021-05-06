@@ -4,7 +4,7 @@ import { db } from "../firebase";
 import articleActions from "../redux/actions/articleActions";
 import Loading from "./Loading";
 import editingActions from "../redux/actions/editingActions";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const [loading, setLoading] = useState(false);
@@ -12,6 +12,9 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const userId = useSelector((state) => state.user.user.id);
   const articles = useSelector((state) => state.articles.articles);
   const admin = userId === user_id;
+  const location = useLocation();
+  const isProfile = location.pathname === "/profile";
+
   const dispatch = useDispatch();
   const history = useHistory();
 
@@ -30,6 +33,9 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   async function handleEdit() {
     dispatch(editingActions.setEditing(true));
     dispatch(editingActions.setEditingDoc({ text, date, itemId }));
+    if (isProfile) {
+      history.push("/home");
+    }
   }
 
   const handleSeeProfile = () => {

@@ -1,8 +1,11 @@
 import React, { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NavBar from "./NavBar";
-import { db } from "../firebase";
 import userActions from "../redux/actions/userActions";
+import firebaseUtils from "../utils/firebase_utils";
+import { useHistory } from "react-router-dom";
+import { auth } from "../firebase";
+import getImageUrl from "../utils/getImageUrl";
 
 function Settings() {
   const user = useSelector((state) => state.user.user);
@@ -13,6 +16,7 @@ function Settings() {
   const fileRef = useRef();
   const nameRef = useRef("");
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const handleChangeInfo = async () => {
     let imageUrl = "";
@@ -30,54 +34,50 @@ function Settings() {
       return setMsg("Your name can't have less of 6 words");
     }
 
-    const resName = await db
-      .collection("users")
-      .where("name", "==", name)
-      .get();
-    if (resName.docs[0]?.id !== user.id) {
-      const already = !resName.empty;
-      if (already) return setMsg("This name already exist, try change it");
-    }
+    try {
+      const resName = await firebaseUtils.thisNameExists(name);
+      if (resName.docs[0]?.id !== user.id) {
+        const already = !resName.empty;
+        if (already) return setMsg("This name already exist, try change it");
+      }
 
-    if (file?.type?.includes("image")) {
-      const formData = new FormData();
+      const res = await getImageUrl(file);
+      if (res !== false && res !== "error") {
+        imageUrl = res;
+      }
+      if (res === "error") {
+        return setMsg("Error uploading the image");
+      }
 
-      formData.append("file", file);
-      formData.append("upload_preset", "mhxqfgbm");
+      const img = imageUrl !== "" ? imageUrl : user.photoURL;
 
-      const options = {
-        method: "POST",
-        body: formData,
-      };
+      await firebaseUtils.updateNameAndPhoto(name, img, user.id);
 
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/dalnxbdem/image/upload",
-        options
+      setDone("Your profile has been updated");
+      dispatch(
+        userActions.setUser({
+          ...user,
+          name: nameRef.current.value,
+          photoURL: img,
+        })
       );
 
-      const jsonData = await res.json();
-      const url = jsonData.url;
-      console.log(url);
-      imageUrl = url;
+      setMsg("");
+    } catch (error) {
+      setMsg("An unexpected error happened");
     }
+  };
 
-    const img = imageUrl !== "" ? imageUrl : user.photoURL;
-
-    await db.collection("users").doc(user.id).update({
-      name: name,
-      photoURL: img,
-    });
-
-    setDone("Your profile has been updated");
-    dispatch(
-      userActions.setUser({
-        ...user,
-        name: nameRef.current.value,
-        photoURL: img,
-      })
-    );
-
-    setMsg("");
+  const handleDeleteAccount = async () => {
+    if (
+      window.confirm(
+        "All your information including your articles will be deleted and this action is irreversible, do you want to continue?"
+      )
+    ) {
+      await firebaseUtils.deleteAccount(user.id);
+      auth.signOut();
+      history.push("/signin");
+    }
   };
 
   return (
@@ -87,7 +87,9 @@ function Settings() {
         <div className="card p-4 col-md-3 m-2">
           {user.photoURL !== null ? (
             <img
-              className="card-img-top rounded-circle"
+              className="mx-auto rounded-circle avatar"
+              width="100"
+              height="100"
               alt="profile"
               src={user.photoURL}
             ></img>
@@ -101,11 +103,13 @@ function Settings() {
             <h4>{user.name === null ? "Anónimo" : user.name}</h4>
             <small>{user.email}</small>
           </div>
-          <button className="btn btn-danger">Delete this account</button>
+          <button className="btn btn-danger" onClick={handleDeleteAccount}>
+            Delete this account
+          </button>
         </div>
 
         <div className="card col-md-8 m-2 row">
-          <div className="card-body col-12">
+          <div className="card-body col-12 d-flex flex-column justify-content-between">
             <form>
               <div className="form-group row">
                 <label htmlFor="user_name" className="col-sm-2 col-form-label">

@@ -44,6 +44,7 @@ function NavBar({ user }) {
           }
         >
           <Link className="nav-link" to="/home">
+            <i className="fas fa-home mx-1 my-0"></i>
             Home<span className="sr-only">(current)</span>
           </Link>
         </li>
@@ -53,11 +54,13 @@ function NavBar({ user }) {
           }
         >
           <Link className="nav-link" to="/settings">
+            <i className="fas fa-cog mx-1"></i>
             Settings<span className="sr-only">(current)</span>
           </Link>
         </li>
         <li className="nav-item mx-2">
           <a className="nav-link" href="/#" onClick={handleLogOut}>
+            <i className="fas fa-sign-out-alt mx-1"></i>
             Logout<span className="sr-only">(current)</span>
           </a>
         </li>

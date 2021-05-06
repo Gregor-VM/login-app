@@ -20,11 +20,25 @@ function WriteArticle() {
     }
   }, [editing]);
 
+  useEffect(() => {
+    const eraser = localStorage.getItem("eraser");
+    if (eraser) {
+      setTextValue(eraser);
+    }
+  }, []);
+
+  const saveEraser = (e) => {
+    e.preventDefault();
+    localStorage.setItem("eraser", textValue);
+    setMsg({ msg: "Your text in save in this device", error: false });
+  };
+
   const handleShare = async (e) => {
     e.preventDefault();
     setSending(true);
 
     if (textValue === "") {
+      setSending(false);
       return setMsg({ msg: "Tu mensaje está vacio!", error: true });
     }
 
@@ -70,6 +84,7 @@ function WriteArticle() {
       );
       setMsg(msg);
       if (finalArticle) dispatch(articleActions.addArticle(finalArticle));
+      if (finalArticle) localStorage.removeItem("eraser");
       setTextValue("");
       setSending(false);
     } catch ({ msg }) {
@@ -96,12 +111,11 @@ function WriteArticle() {
             placeholder="Write something interesting and share it..."
           ></textarea>
         </div>
-        {msg.error && msg.msg !== "" ? (
-          <div className="alert alert-danger">{msg.msg}</div>
-        ) : null}
-        {!msg.error && msg.msg !== "" ? (
-          <div className="alert alert-success">{msg.msg}</div>
-        ) : null}
+        {msg.msg !== "" && (
+          <div className={"alert alert-" + (msg.error ? "danger" : "success")}>
+            {msg.msg}
+          </div>
+        )}
         <button
           type="submit"
           className="btn btn-success"
@@ -117,7 +131,14 @@ function WriteArticle() {
           </button>
         )}
 
-        <button className="btn btn-outline-secondary ml-2">Save</button>
+        {!editing.editing && (
+          <button
+            className="btn btn-outline-secondary ml-2"
+            onClick={saveEraser}
+          >
+            Save
+          </button>
+        )}
       </div>
     </div>
   );

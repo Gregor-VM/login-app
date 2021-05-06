@@ -10,6 +10,7 @@ import Profile from "./Profile";
 
 function Layout() {
   const user = useSelector((state) => state.user.user);
+
   return (
     <Router>
       <Switch>
