@@ -4,6 +4,7 @@ import { signInWithGoogle, auth } from "../firebase";
 import { useBackground } from "../hooks/useBackground";
 import { validateSignUp } from "../utils/utils";
 import useSetUser from "../hooks/useSetUser";
+import preUrl from "../utils/preUrl";
 
 function SignUp() {
   const [emailError, setEmailError] = useState(undefined);
@@ -106,7 +107,7 @@ function SignUp() {
         </button>
         <small className="text-center">
           Do you already have an account?
-          <Link to="/signin"> Sign In here!</Link>
+          <Link to={preUrl + "/signin"}> Sign In here!</Link>
         </small>
       </div>
     </div>

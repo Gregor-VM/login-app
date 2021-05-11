@@ -6,6 +6,7 @@ import firebaseUtils from "../utils/firebase_utils";
 import { useHistory } from "react-router-dom";
 import { auth } from "../firebase";
 import getImageUrl from "../utils/getImageUrl";
+import preUrl from "../utils/preUrl";
 
 function Settings() {
   const user = useSelector((state) => state.user.user);
@@ -76,7 +77,7 @@ function Settings() {
     ) {
       await firebaseUtils.deleteAccount(user.id);
       auth.signOut();
-      history.push("/signin");
+      history.push(preUrl + "/signin");
     }
   };
 

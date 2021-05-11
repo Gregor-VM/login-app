@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { auth } from "../firebase";
 import userActions from "../redux/actions/userActions";
+import preUrl from "../utils/preUrl";
 
 function NavBar({ user }) {
   const dispatch = useDispatch();
@@ -12,13 +13,13 @@ function NavBar({ user }) {
   const handleLogOut = (e) => {
     e.preventDefault();
     auth.signOut();
-    history.push("/signin");
+    history.push(preUrl + "/signin");
     dispatch(userActions.setUser({}));
   };
 
   const handleSeeProfile = (e) => {
     e.preventDefault();
-    history.push("/profile", user.id);
+    history.push(preUrl + "/profile", user.id);
   };
 
   return (
@@ -40,20 +41,22 @@ function NavBar({ user }) {
       <ul className="navbar-nav d-flex flex-row">
         <li
           className={
-            (currentLocation === "/home" ? "active" : "") + " nav-item mx-2"
+            (currentLocation.includes("/home") ? "active" : "") +
+            " nav-item mx-2"
           }
         >
-          <Link className="nav-link" to="/home">
+          <Link className="nav-link" to={preUrl + "/home"}>
             <i className="fas fa-home mx-1 my-0"></i>
             Home<span className="sr-only">(current)</span>
           </Link>
         </li>
         <li
           className={
-            (currentLocation === "/settings" ? "active" : "") + " nav-item mx-2"
+            (currentLocation.includes("/settings") ? "active" : "") +
+            " nav-item mx-2"
           }
         >
-          <Link className="nav-link" to="/settings">
+          <Link className="nav-link" to={preUrl + "/settings"}>
             <i className="fas fa-cog mx-1"></i>
             Settings<span className="sr-only">(current)</span>
           </Link>

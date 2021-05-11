@@ -5,6 +5,7 @@ import articleActions from "../redux/actions/articleActions";
 import Loading from "./Loading";
 import editingActions from "../redux/actions/editingActions";
 import { useHistory, useLocation } from "react-router-dom";
+import preUrl from "../utils/preUrl";
 
 function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const [loading, setLoading] = useState(false);
@@ -13,7 +14,7 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const articles = useSelector((state) => state.articles.articles);
   const admin = userId === user_id;
   const location = useLocation();
-  const isProfile = location.pathname === "/profile";
+  const isProfile = location.pathname.includes("/profile");
 
   const dispatch = useDispatch();
   const history = useHistory();
@@ -34,12 +35,12 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
     dispatch(editingActions.setEditing(true));
     dispatch(editingActions.setEditingDoc({ text, date, itemId }));
     if (isProfile) {
-      history.push("/home");
+      history.push(preUrl + "/home");
     }
   }
 
   const handleSeeProfile = () => {
-    history.push("/profile", user_id);
+    history.push(preUrl + "/profile", user_id);
   };
 
   return (

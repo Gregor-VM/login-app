@@ -15,7 +15,7 @@ function Articles({ id }) {
   const [articlesState, setArticlesState] = useState([]);
 
   const location = useLocation();
-  const isProfile = location.pathname === "/profile";
+  const isProfile = location.pathname.includes("/profile");
 
   const dispatch = useDispatch();
   const loadArticlesCallback = useCallback(
