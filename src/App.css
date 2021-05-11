@@ -2,10 +2,6 @@
   height: 100vh;
 }
 
-.card-body {
-  max-width: 300px;
-}
-
 body {
   background-repeat: no-repeat;
   background-size: cover;
