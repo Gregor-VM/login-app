@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { auth } from "../firebase";
 import { Link } from "react-router-dom";
 import { useBackground } from "../hooks/useBackground";
-import preUrl from "../utils/preUrl";
 
 function ForgotPassword() {
   const [msg, setMsg] = useState("");
@@ -38,7 +37,7 @@ function ForgotPassword() {
           Send Email
         </button>
         <small className="my-2 text-center">{msg}</small>
-        <Link to={preUrl + "/signin"}>
+        <Link to="/signin">
           <small className="text-center mt-1">Back to Sign in</small>
         </Link>
       </div>

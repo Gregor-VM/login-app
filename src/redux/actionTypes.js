@@ -6,6 +6,8 @@ const actionTypes = {
 
   SET_EDITING: "SET_EDITING",
   SET_EDITING_DOC: "SET_EDITING_DOC",
+
+  SET_PROFILE_ID: "SET_PROFILE_ID",
 };
 
 export default actionTypes;

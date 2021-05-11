@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
 import { auth } from "../firebase";
 import userActions from "../redux/actions/userActions";
-import preUrl from "../utils/preUrl";
+import profileActions from "../redux/actions/profileActions";
 
 function NavBar({ user }) {
   const dispatch = useDispatch();
@@ -13,13 +13,14 @@ function NavBar({ user }) {
   const handleLogOut = (e) => {
     e.preventDefault();
     auth.signOut();
-    history.push(preUrl + "/signin");
+    history.push("/signin");
     dispatch(userActions.setUser({}));
   };
 
   const handleSeeProfile = (e) => {
     e.preventDefault();
-    history.push(preUrl + "/profile", user.id);
+    dispatch(profileActions.setProfileId(user.id));
+    history.push("/profile");
   };
 
   return (
@@ -45,7 +46,7 @@ function NavBar({ user }) {
             " nav-item mx-2"
           }
         >
-          <Link className="nav-link" to={preUrl + "/home"}>
+          <Link className="nav-link" to="/home">
             <i className="fas fa-home mx-1 my-0"></i>
             Home<span className="sr-only">(current)</span>
           </Link>
@@ -56,7 +57,7 @@ function NavBar({ user }) {
             " nav-item mx-2"
           }
         >
-          <Link className="nav-link" to={preUrl + "/settings"}>
+          <Link className="nav-link" to="/settings">
             <i className="fas fa-cog mx-1"></i>
             Settings<span className="sr-only">(current)</span>
           </Link>

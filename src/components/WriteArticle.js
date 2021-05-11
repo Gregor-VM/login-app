@@ -100,7 +100,7 @@ function WriteArticle() {
   };
 
   return (
-    <div className="card mt-3 row mx-1 shadow-sm">
+    <div className="card mt-md-3 row mx-md-1 shadow-sm">
       <div className="card-body col-12">
         <div className="form-group">
           <textarea

@@ -65,7 +65,7 @@ function Articles({ id }) {
   };
 
   return (
-    <div className="card mt-4 mx-1 row p-4 shadow">
+    <div className="card mt-2 mt-md-4 mx-md-1 row p-2 p-md-4 shadow">
       <div className="card-body col-12">
         <div className="d-flex justify-content-between">
           <h4 className="text-center m-0">Last Articles:</h4>

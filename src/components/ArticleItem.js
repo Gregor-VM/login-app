@@ -4,8 +4,8 @@ import { db } from "../firebase";
 import articleActions from "../redux/actions/articleActions";
 import Loading from "./Loading";
 import editingActions from "../redux/actions/editingActions";
+import profileActions from "../redux/actions/profileActions";
 import { useHistory, useLocation } from "react-router-dom";
-import preUrl from "../utils/preUrl";
 
 function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
   const [loading, setLoading] = useState(false);
@@ -35,12 +35,13 @@ function ArticleItem({ name, photoURL, text, date, user_id, itemId }) {
     dispatch(editingActions.setEditing(true));
     dispatch(editingActions.setEditingDoc({ text, date, itemId }));
     if (isProfile) {
-      history.push(preUrl + "/home");
+      history.push("/home");
     }
   }
 
   const handleSeeProfile = () => {
-    history.push(preUrl + "/profile", user_id);
+    dispatch(profileActions.setProfileId(user_id));
+    history.push("/profile");
   };
 
   return (

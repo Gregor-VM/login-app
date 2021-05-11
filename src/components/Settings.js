@@ -6,7 +6,6 @@ import firebaseUtils from "../utils/firebase_utils";
 import { useHistory } from "react-router-dom";
 import { auth } from "../firebase";
 import getImageUrl from "../utils/getImageUrl";
-import preUrl from "../utils/preUrl";
 
 function Settings() {
   const user = useSelector((state) => state.user.user);
@@ -77,14 +76,14 @@ function Settings() {
     ) {
       await firebaseUtils.deleteAccount(user.id);
       auth.signOut();
-      history.push(preUrl + "/signin");
+      history.push("/signin");
     }
   };
 
   return (
     <>
       <NavBar user={user} />
-      <div className="container row mx-auto">
+      <div className="container row mx-auto m-0 p-0 p-md-2">
         <div className="card p-4 col-md-3 m-2">
           {user.photoURL !== null ? (
             <img
@@ -110,7 +109,7 @@ function Settings() {
         </div>
 
         <div className="card col-md-8 m-2 row">
-          <div className="card-body col-12 d-flex flex-column justify-content-between">
+          <div className="card-body col-12 d-flex flex-column justify-content-between p-2 p-md-3">
             <form>
               <div className="form-group row">
                 <label htmlFor="user_name" className="col-sm-2 col-form-label">

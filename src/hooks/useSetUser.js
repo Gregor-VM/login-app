@@ -3,7 +3,6 @@ import { auth, db } from "../firebase";
 import { useDispatch } from "react-redux";
 import userActions from "../redux/actions/userActions";
 import { useHistory } from "react-router-dom";
-import preUrl from "../utils/preUrl";
 
 const useSetUser = () => {
   const dispatch = useDispatch();
@@ -30,7 +29,7 @@ const useSetUser = () => {
         userInfo = data.docs[0].data();
       }
       dispatch(userActions.setUser(userInfo));
-      history.push(preUrl + "/home");
+      history.push("/home");
     });
     return unsuscribe;
   }, [dispatch, history]);
