@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/login-app/static/css/main.dc213c9b.chunk.css",
+    "main.js": "/login-app/static/js/main.da9b19ff.chunk.js",
+    "main.js.map": "/login-app/static/js/main.da9b19ff.chunk.js.map",
+    "runtime-main.js": "/login-app/static/js/runtime-main.69decc04.js",
+    "runtime-main.js.map": "/login-app/static/js/runtime-main.69decc04.js.map",
+    "static/css/2.c6d43d29.chunk.css": "/login-app/static/css/2.c6d43d29.chunk.css",
+    "static/js/2.89292985.chunk.js": "/login-app/static/js/2.89292985.chunk.js",
+    "static/js/2.89292985.chunk.js.map": "/login-app/static/js/2.89292985.chunk.js.map",
+    "index.html": "/login-app/index.html",
+    "static/css/2.c6d43d29.chunk.css.map": "/login-app/static/css/2.c6d43d29.chunk.css.map",
+    "static/css/main.dc213c9b.chunk.css.map": "/login-app/static/css/main.dc213c9b.chunk.css.map",
+    "static/js/2.89292985.chunk.js.LICENSE.txt": "/login-app/static/js/2.89292985.chunk.js.LICENSE.txt",
+    "static/media/all.min.css": "/login-app/static/media/fa-solid-900.efbd5d20.eot"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.69decc04.js",
+    "static/css/2.c6d43d29.chunk.css",
+    "static/js/2.89292985.chunk.js",
+    "static/css/main.dc213c9b.chunk.css",
+    "static/js/main.da9b19ff.chunk.js"
+  ]
+}
