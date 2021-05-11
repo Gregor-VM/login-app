@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/login-app/static/css/main.dc213c9b.chunk.css",
+    "main.css": "/login-app/static/css/main.5c5e4fed.chunk.css",
     "main.js": "/login-app/static/js/main.9989faa7.chunk.js",
     "main.js.map": "/login-app/static/js/main.9989faa7.chunk.js.map",
     "runtime-main.js": "/login-app/static/js/runtime-main.69decc04.js",
@@ -10,7 +10,7 @@
     "static/js/2.89292985.chunk.js.map": "/login-app/static/js/2.89292985.chunk.js.map",
     "index.html": "/login-app/index.html",
     "static/css/2.c6d43d29.chunk.css.map": "/login-app/static/css/2.c6d43d29.chunk.css.map",
-    "static/css/main.dc213c9b.chunk.css.map": "/login-app/static/css/main.dc213c9b.chunk.css.map",
+    "static/css/main.5c5e4fed.chunk.css.map": "/login-app/static/css/main.5c5e4fed.chunk.css.map",
     "static/js/2.89292985.chunk.js.LICENSE.txt": "/login-app/static/js/2.89292985.chunk.js.LICENSE.txt",
     "static/media/all.min.css": "/login-app/static/media/fa-solid-900.efbd5d20.eot"
   },
@@ -18,7 +18,7 @@
     "static/js/runtime-main.69decc04.js",
     "static/css/2.c6d43d29.chunk.css",
     "static/js/2.89292985.chunk.js",
-    "static/css/main.dc213c9b.chunk.css",
+    "static/css/main.5c5e4fed.chunk.css",
     "static/js/main.9989faa7.chunk.js"
   ]
 }
