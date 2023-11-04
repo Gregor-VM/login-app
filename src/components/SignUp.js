@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { signInWithGoogle, auth } from "../firebase";
+import { signInWithGoogle, auth, signAsAnonimous } from "../firebase";
 import { useBackground } from "../hooks/useBackground";
 import { validateSignUp } from "../utils/utils";
 import useSetUser from "../hooks/useSetUser";
@@ -38,6 +38,10 @@ function SignUp() {
   const googleLogin = () => {
     signInWithGoogle();
   };
+
+  const signInAsGuest = () => {
+    signAsAnonimous();
+  }
 
   useSetUser();
 
@@ -84,7 +88,7 @@ function SignUp() {
                 id="confirmpassword"
                 type="password"
                 className={"form-control " + (passwordError && "is-invalid")}
-                placeholder="Enter your confirm password..."
+                placeholder="Confirm your password..."
               ></input>
               {passwordError && (
                 <div className="invalid-feedback">{passwordError}</div>
@@ -98,12 +102,22 @@ function SignUp() {
           </form>
         </div>
         <p className="text-center m-0 mb-3">or</p>
+
         <button
           className="btn btn-outline-danger btn-block mb-2"
           onClick={googleLogin}
         >
           <i className="fab fa-google mr-2"></i>Sign Up With Google
         </button>
+
+        <button
+            className="btn btn-outline-secondary btn-block mb-2"
+            onClick={signInAsGuest}
+          >
+            <i className="fas fa-mask mr-2"></i>Continue As Guest
+          </button>
+
+
         <small className="text-center">
           Do you already have an account?
           <Link to="/signin"> Sign In here!</Link>

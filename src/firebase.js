@@ -20,6 +20,9 @@ export const signInWithGoogle = () => {
   auth.signInWithPopup(provider);
 };
 
+export const signAsAnonimous = () => {
+  auth.signInAnonymously();
+}
+
 export const auth = firebase.auth();
 export const db = firebase.firestore();
-//export const storage = firebase.storage();
