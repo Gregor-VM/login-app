@@ -1,24 +1,28 @@
 {
   "files": {
-    "main.css": "/login-app/static/css/main.5c5e4fed.chunk.css",
-    "main.js": "/login-app/static/js/main.8af97adf.chunk.js",
-    "main.js.map": "/login-app/static/js/main.8af97adf.chunk.js.map",
-    "runtime-main.js": "/login-app/static/js/runtime-main.69decc04.js",
-    "runtime-main.js.map": "/login-app/static/js/runtime-main.69decc04.js.map",
-    "static/css/2.c6d43d29.chunk.css": "/login-app/static/css/2.c6d43d29.chunk.css",
-    "static/js/2.116a848c.chunk.js": "/login-app/static/js/2.116a848c.chunk.js",
-    "static/js/2.116a848c.chunk.js.map": "/login-app/static/js/2.116a848c.chunk.js.map",
+    "main.css": "/login-app/static/css/main.379305b5.css",
+    "main.js": "/login-app/static/js/main.1504b0d5.js",
+    "static/media/fa-solid-900.svg": "/login-app/static/media/fa-solid-900.7a8b4f130182d19a2d7c.svg",
+    "static/media/fa-brands-400.svg": "/login-app/static/media/fa-brands-400.2f517e09eb2ca6650ff5.svg",
+    "static/media/fa-solid-900.eot": "/login-app/static/media/fa-solid-900.9bbb245e67a133f6e486.eot",
+    "static/media/fa-solid-900.ttf": "/login-app/static/media/fa-solid-900.be9ee23c0c6390141475.ttf",
+    "static/media/fa-regular-400.svg": "/login-app/static/media/fa-regular-400.4689f52cc96215721344.svg",
+    "static/media/fa-brands-400.eot": "/login-app/static/media/fa-brands-400.23f19bb08961f37aaf69.eot",
+    "static/media/fa-brands-400.ttf": "/login-app/static/media/fa-brands-400.527940b104eb2ea366c8.ttf",
+    "static/media/fa-solid-900.woff": "/login-app/static/media/fa-solid-900.eeccf4f66002c6f2ba24.woff",
+    "static/media/fa-brands-400.woff": "/login-app/static/media/fa-brands-400.2285773e6b4b172f07d9.woff",
+    "static/media/fa-solid-900.woff2": "/login-app/static/media/fa-solid-900.1551f4f60c37af51121f.woff2",
+    "static/media/fa-brands-400.woff2": "/login-app/static/media/fa-brands-400.d878b0a6a1144760244f.woff2",
+    "static/media/fa-regular-400.eot": "/login-app/static/media/fa-regular-400.77206a6bb316fa0aded5.eot",
+    "static/media/fa-regular-400.ttf": "/login-app/static/media/fa-regular-400.491974d108fe4002b2aa.ttf",
+    "static/media/fa-regular-400.woff": "/login-app/static/media/fa-regular-400.bb58e57c48a3e911f15f.woff",
+    "static/media/fa-regular-400.woff2": "/login-app/static/media/fa-regular-400.7a3337626410ca2f4071.woff2",
     "index.html": "/login-app/index.html",
-    "static/css/2.c6d43d29.chunk.css.map": "/login-app/static/css/2.c6d43d29.chunk.css.map",
-    "static/css/main.5c5e4fed.chunk.css.map": "/login-app/static/css/main.5c5e4fed.chunk.css.map",
-    "static/js/2.116a848c.chunk.js.LICENSE.txt": "/login-app/static/js/2.116a848c.chunk.js.LICENSE.txt",
-    "static/media/all.min.css": "/login-app/static/media/fa-solid-900.efbd5d20.eot"
+    "main.379305b5.css.map": "/login-app/static/css/main.379305b5.css.map",
+    "main.1504b0d5.js.map": "/login-app/static/js/main.1504b0d5.js.map"
   },
   "entrypoints": [
-    "static/js/runtime-main.69decc04.js",
-    "static/css/2.c6d43d29.chunk.css",
-    "static/js/2.116a848c.chunk.js",
-    "static/css/main.5c5e4fed.chunk.css",
-    "static/js/main.8af97adf.chunk.js"
+    "static/css/main.379305b5.css",
+    "static/js/main.1504b0d5.js"
   ]
 }
