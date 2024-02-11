@@ -10,7 +10,7 @@ import getImageUrl from "../utils/getImageUrl";
 function Settings() {
   const user = useSelector((state) => state.user.user);
   const [updateInfo, setUpdateInfo] = useState(false);
-  const [nameInput, setNameInput] = useState(user.name);
+  const [nameInput, setNameInput] = useState(user.name || "");
   const [msg, setMsg] = useState("");
   const [done, setDone] = useState("");
   const fileRef = useRef();

@@ -4,6 +4,7 @@ import articleActions from "../redux/actions/articleActions";
 import { useDispatch } from "react-redux";
 import firebaseUtils from "../utils/firebase_utils";
 import editingActions from "../redux/actions/editingActions";
+import ReactTextareaAutosize from "react-textarea-autosize";
 
 function WriteArticle() {
   const [textValue, setTextValue] = useState("");
@@ -103,13 +104,13 @@ function WriteArticle() {
     <div className="card mt-md-3 row mx-md-1 shadow-sm">
       <div className="card-body col-12">
         <div className="form-group">
-          <textarea
+          <ReactTextareaAutosize
             onChange={(e) => setTextValue(e.target.value)}
             value={textValue}
-            rows="6"
+            minRows={6}
             className="form-control"
             placeholder="Write something interesting and share it..."
-          ></textarea>
+          ></ReactTextareaAutosize>
         </div>
         {msg.msg !== "" && (
           <div className={"alert alert-" + (msg.error ? "danger" : "success")}>

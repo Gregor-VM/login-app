@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import ForgotPassword from "./ForgotPassword";
 import Settings from "./Settings";
 import Profile from "./Profile";
+import Demo from "./Demo";
 
 function Layout() {
   const user = useSelector((state) => state.user.user);
@@ -19,6 +20,7 @@ function Layout() {
           path="/"
           component={user.id === undefined ? SignIn : Home}
         />
+        <Route path="/demo" component={Demo} />
         <Route path="/signin" component={SignIn} />
         <Route path="/signup" component={SignUp} />
         <Route path="/home" component={user.id === undefined ? SignIn : Home} />
